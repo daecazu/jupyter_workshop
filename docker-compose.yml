@@ -1,0 +1,17 @@
+version: "3"
+services:
+  jupyter:
+    image: jupyter/workshop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ${LOCAL_WORKING_DIR:-./notebooks}:/home/jovyan/work
+      - ${LOCAL_DATASETS:-./notebooks/datasets}:/home/jovyan/work/datasets
+      - ${LOCAL_MODULES:-./notebooks/modules}:/home/jovyan/work/modules
+      - ${COMMANDS_MODULES:-./notebooks/commands}:/home/jovyan/work/commands
+    ports:
+      - ${PORT:-8888}:8888
+    container_name: jupyter
+    command: "start-notebook.sh \
+          --NotebookApp.token='' --NotebookApp.password=''"
